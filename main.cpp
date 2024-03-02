@@ -1,7 +1,9 @@
 #include <iostream>
 #include <cstdlib>
+#include "square.h"
 
 int main() {
-    std::cout << "test" << std::endl;
+    Square test = Square(3);
+    std::cout << "this square's value is: " << test.getValue() << std::endl;
     return 0;
 }
