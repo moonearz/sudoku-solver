@@ -4,6 +4,11 @@
 
 int main() {
     Square test = Square(3);
-    std::cout << "this square's value is: " << test.getValue() << std::endl;
+    Square empty = Square();
+    std::cout << "this square's candidates are: ";
+    empty.printCandidates();
+    empty.removeCandidate(3);
+    std::cout << "this square's candidates are now: ";
+    empty.printCandidates();
     return 0;
 }
