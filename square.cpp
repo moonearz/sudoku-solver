@@ -18,6 +18,7 @@ void Square::resetSquare() {
 }
 
 void Square::printCandidates() {
+    std::cout << "This square's candidates are: ";
     for(int i = 0; i < 9; i++) {
         if(((1 << i) & candidates) != 0) {
             std::cout << i + 1 << " ";
