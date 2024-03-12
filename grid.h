@@ -6,11 +6,11 @@
 #include "square.h"
 
 class Grid {
-    std::vector<Square> squares;
+    std::vector<Square*> squares;
 
     public:
         void printGrid();
-        void setGrid(std::string setup);
+        void setGrid();
 
         //constructors
         Grid();
