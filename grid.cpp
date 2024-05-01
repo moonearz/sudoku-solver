@@ -68,16 +68,18 @@ bool Grid::validCols() {
             return false;
         }
     }
+    std::cout << "The columns are all good!" << std::endl;
     return true;
 }
 
 bool Grid::validBlocks() {
     for(int i = 0; i < 9; i++) {
-        if(!rows[i]->valid_group()) {
+        if(!blocks[i]->valid_group()) {
             std::cout << "Block " << i + 1 << " is not valid!" << std::endl;
             return false;
         }
     }
+    std::cout << "The blocks are all good!" << std::endl;
     return true;
 }
 

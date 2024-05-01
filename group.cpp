@@ -22,13 +22,15 @@ void Group::print_group() {
 bool Group::valid_group() {
     std::vector<int> unused = {1, 2, 3, 4, 5, 6, 7, 8, 9};
     for(int i = 0; i < 9; i++) {
+        bool flag = true;
         for(int j = 0; j < unused.size(); j++) {
             if(squares[i]->getValue() == unused[j]) {
                 unused.erase(unused.begin() + j);
+                flag = false;
                 break;
             }
-            return false;
         }
+        if(flag) return false;
     }
     return true;
 }
