@@ -32,8 +32,17 @@ void Grid::setGrid(std::string input) {
 Grid::Grid() {
     //figure out how to do this in initiazliation
     squares.reserve(81);
+    for(int i = 0; i < 9; i++) {
+        Group* new_row = new Group();
+        Group* new_col = new Group();
+        Group* new_block = new Group();
+        rows.push_back(new_row);
+        cols.push_back(new_col);
+        blocks.push_back(new_block);
+    }
     for(int i = 0; i < 81; i++) {
-        squares[i] = new Square();
+        Square* new_square = new Square();
+        squares[i] = new_square;
     }
 }
 

@@ -4,9 +4,13 @@
 #include <vector>
 #include <string>
 #include "square.h"
+#include "group.h"
 
 class Grid {
     std::vector<Square*> squares;
+    std::vector<Group*> rows;
+    std::vector<Group*> cols;
+    std::vector<Group*> blocks;
 
     public:
         void printGrid();
