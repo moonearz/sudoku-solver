@@ -100,6 +100,8 @@ Grid::Grid() {
         Square* new_square = new Square();
         squares[i] = new_square;
         rows[i / 9]->set_square(i % 9, new_square);
+        cols[i % 9]->set_square(i / 9, new_square);
+        blocks[(i / 9) / 3 + (i % 9) / 3]->set_square((3 * i / 9) % 3 + (i % 9) % 3, new_square);
     }
 }
 
@@ -109,14 +111,29 @@ Grid::Grid(std::string setup) {
         Grid();
     }
     else {
+        for(int i = 0; i < 9; i++) {
+            Group* new_row = new Group();
+            Group* new_col = new Group();
+            Group* new_block = new Group();
+            rows.push_back(new_row);
+            cols.push_back(new_col);
+            blocks.push_back(new_block);
+        }
         for(int i = 0; i < setup.size(); i++) {
+            Square* new_square = nullptr;
             if(setup.at(i) <= '9' && setup.at(i) >= '1') {
-                int temp = setup.at(i) - '1';
-                squares[i] = new Square(temp);
+                int temp = setup.at(i) - '0';
+                new_square = new Square(temp);
             }
             else {
-                squares[i] = new Square();
+                new_square = new Square();
             }
+            squares[i] = new_square;
+            rows[i / 9]->set_square(i % 9, new_square);
+            cols[i % 9]->set_square(i / 9, new_square);
+            int block_num = 3 * ((i / 9) / 3) + (i % 9) / 3;
+            int index = (3 * (((i / 9)) % 3)) + (i % 9) % 3;
+            blocks[block_num]->set_square(index, new_square);
         }
     }
 }
