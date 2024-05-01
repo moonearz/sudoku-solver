@@ -8,6 +8,10 @@ int Square::getCandidates() {
     return this->candidates;
 }
 
+int Square::getIndex() {
+    return this->index;
+}
+
 void Square::setValue(int _value) {
     this->value = _value;
     if(_value != 0) {
