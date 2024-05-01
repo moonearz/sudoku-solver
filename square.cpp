@@ -38,13 +38,15 @@ void Square::removeCandidate(int _candidate) {
     this->candidates &= mask;
 }
 
-Square::Square() {
+Square::Square(int _index) {
     this->value = EMPTY;
     this->candidates = 0x1ff;
+    this->index = _index;
 }
 
-Square::Square(int _value) {
+Square::Square(int _index, int _value) {
     this->value = _value;
     this->candidates = 0x000;
+    this->index = _index;
 }
 

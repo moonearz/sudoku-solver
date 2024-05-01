@@ -44,6 +44,7 @@ void Grid::printSquare(int index) {
      std::cout << "Square " << index << "-- ";
      squares[index]->printCandidates();
 }
+
 void Grid::printSquareCandidates() {
     for(int i = 0; i < 81; i++) {
         printSquare(i);
@@ -94,6 +95,39 @@ void Grid::markupGrid() {
     for(int i = 0; i < 81; i++) {
         markupSquare(i);
     }
+}
+
+bool Grid::is_solved() {
+    for(int i = 0; i < 81; i++) {
+        if(squares[i]->getValue() == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool Grid::find_forced_nums() {
+    bool made_change = false;
+    for(int i = 0; i < 9; i++) {
+        if(rows[i]->find_forced_number()) {
+            std::cout << "change in row " << i << std::endl;
+            made_change = true;
+        }
+        if(cols[i]->find_forced_number()) {
+            std::cout << "change in col " << i << std::endl;
+            made_change = true;
+        }
+        if(blocks[i]->find_forced_number()) {
+            std::cout << "change in block " << i << std::endl;
+            made_change = true;
+        }
+    }
+    return made_change;
+}
+
+void Grid::solve_pp() {
+    //check if puzzle is already solved
+    if(is_solved()) return;
 }
 
 bool Grid::validRows() {
@@ -154,7 +188,7 @@ Grid::Grid() {
         blocks.push_back(new_block);
     }
     for(int i = 0; i < 81; i++) {
-        Square* new_square = new Square();
+        Square* new_square = new Square(i);
         squares[i] = new_square;
         rows[i / 9]->set_square(i % 9, new_square);
         cols[i % 9]->set_square(i / 9, new_square);
@@ -182,10 +216,10 @@ Grid::Grid(std::string setup) {
             Square* new_square = nullptr;
             if(setup.at(i) <= '9' && setup.at(i) >= '1') {
                 int temp = setup.at(i) - '0';
-                new_square = new Square(temp);
+                new_square = new Square(i, temp);
             }
             else {
-                new_square = new Square();
+                new_square = new Square(i);
             }
             squares[i] = new_square;
             rows[i / 9]->set_square(i % 9, new_square);

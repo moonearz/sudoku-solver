@@ -14,4 +14,5 @@ class Group {
         bool valid_group();
         void set_square(int index, Square* square);
         Square* get_square(int index);
+        bool find_forced_number();
 };

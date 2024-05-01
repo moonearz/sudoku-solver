@@ -29,6 +29,11 @@ class Grid {
         void markupSquare(int index);
         void markupGrid();
 
+        //solve with pencil-and-paper algorithm
+        bool is_solved();
+        bool find_forced_nums();
+        void solve_pp();
+
         //valid grid checkers
         bool validRows();
         bool validCols();
