@@ -110,15 +110,15 @@ bool Grid::find_forced_nums() {
     bool made_change = false;
     for(int i = 0; i < 9; i++) {
         if(rows[i]->find_forced_number()) {
-            std::cout << "change in row " << i << std::endl;
+            //std::cout << "change in row " << i << std::endl;
             made_change = true;
         }
         if(cols[i]->find_forced_number()) {
-            std::cout << "change in col " << i << std::endl;
+            //std::cout << "change in col " << i << std::endl;
             made_change = true;
         }
         if(blocks[i]->find_forced_number()) {
-            std::cout << "change in block " << i << std::endl;
+            //std::cout << "change in block " << i << std::endl;
             made_change = true;
         }
     }

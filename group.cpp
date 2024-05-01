@@ -44,17 +44,19 @@ Square* Group::get_square(int index) {
 }
 
 bool Group::find_forced_number() {
-    //idea: & together all candidates and if there is a single number left, that is a forced number
+    //idea: bitwise OR, then XOR together all candidates and if there is a single number left, that is a forced number
     bool made_change = false;
     std::vector<int> pows_of_two = {1, 2, 4, 8, 16, 32, 64, 128, 256};
     for(int i = 0; i < 9; i++) {
         int target_candidates = squares[i]->getCandidates();
-        //std::cout << "before anding " << target_candidates << std::endl;
+        if(target_candidates == 0) {
+            continue;
+        }
         //check if there is only one candidate
         bool one_candidate = false;
         for(int j = 0; j < 9; j++) {
             if(target_candidates == pows_of_two[j]) {
-                std::cout << "setting value to: " << j + 1<< std::endl;
+                std::cout << "ONLY-- setting value to: " << j + 1 << std::endl;
                 squares[i]->setValue(j + 1);
                 made_change = true;
                 one_candidate = true;
@@ -68,13 +70,16 @@ bool Group::find_forced_number() {
                 continue;
             }
             //can't & values that are set because candidates is 0
-            if(squares[j]->getValue() == 0) target_candidates &= squares[j]->getCandidates();
+            if(squares[j]->getValue() == 0) {
+                target_candidates |= squares[j]->getCandidates();
+                target_candidates ^= squares[j]->getCandidates();
+            }
         }
         //check new candidate value
         for(int j = 0; j < 9; j++) {
             if(target_candidates == pows_of_two[j]) {
-                std::cout << "setting square " << squares[i]->getIndex() <<  "'s value to: " << j + 1 << std::endl;
-                //squares[i]->setValue(j + 1);
+                //std::cout << "AFTER something-- setting square " << squares[i]->getIndex() <<  "'s value to: " << j + 1 << std::endl;
+                squares[i]->setValue(j + 1);
                 made_change = true;
                 break;
             }
