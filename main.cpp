@@ -14,8 +14,6 @@ int main() {
 
 
     Grid test = Grid(unsolved_shortz);
-    test.printGrid();
-    test.setGrid(test_valid);
-    test.printGrid();
+    std::cout << test.readGrid();
     return 0;
 }

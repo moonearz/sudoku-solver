@@ -40,6 +40,13 @@ void Grid::printBlocks(){
     }
 }
 
+void Grid::printSquareCandidates() {
+    for(int i = 0; i < 81; i++) {
+        std::cout << "Square " << i << "-- ";
+        squares[i]->printCandidates();
+    }
+}
+
 std::string Grid::getGrid() {
     std::string input;
     std::string setup;
@@ -53,7 +60,7 @@ std::string Grid::getGrid() {
 
 std::string Grid::readGrid() {
     std::string output = "";
-    for(int i = 0; i < squares.size(); i++) {
+    for(int i = 0; i < 81; i++) {
         output += std::to_string(squares[i]->getValue());
     }
     return output;

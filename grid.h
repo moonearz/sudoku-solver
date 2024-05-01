@@ -17,6 +17,7 @@ class Grid {
         void printRows();
         void printCols();
         void printBlocks();
+        void printSquareCandidates();
         std::string readGrid();
         //get input from console to set grid
         std::string getGrid();
