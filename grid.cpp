@@ -4,7 +4,7 @@ void Grid::printGrid() {
     std::cout << " --- --- --- --- --- --- --- --- ---" << std::endl;
     for(int i = 0; i < 9; i++) {
         for(int j = 0; j < 9; j++) {
-            std::cout << "| 0 ";
+            std::cout << "| " << squares[9 * i + j]->getValue() <<  " ";
         }
         std::cout << "|" << std::endl;
         std::cout <<  " --- --- --- --- --- --- --- --- ---" << std::endl;
@@ -12,12 +12,20 @@ void Grid::printGrid() {
     std::cout << std::endl;
 }
 
-void Grid::setGrid() {
+std::string Grid::getGrid() {
     std::string input;
+    std::string setup;
     for(int i = 0; i < 9; i++) {
         std::cout << "Enter in the " << (i + 1) << "th row: ";
         std::cin >> input;
-        std::cout << "\n" << input << "\n";
+        setup += input;
+    }
+    return setup;
+}
+
+void Grid::setGrid(std::string input) {
+    for(int i = 0; i < input.size(); i++) {
+        squares[i]->setValue(int(input[i]) - 48);
     }
 }
 
@@ -45,4 +53,12 @@ Grid::Grid(std::string setup) {
             }
         }
     }
+}
+
+Grid::~Grid() {
+    for(int i = 0; i < squares.size(); i++) {
+        delete squares[i];
+        std::cout << "square " << i << " deleted." << std::endl;
+    }
+    std::cout << "destructor called" << std::endl;
 }

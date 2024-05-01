@@ -10,10 +10,14 @@ class Grid {
 
     public:
         void printGrid();
-        void setGrid();
+        //get input from console to set grid
+        std::string getGrid();
+        //set grid from input string
+        void setGrid(std::string layout);
 
-        //constructors
+        //constructors/destructor
         Grid();
         Grid(std::string setup);
+        ~Grid();
 
 };
