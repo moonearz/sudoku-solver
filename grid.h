@@ -17,6 +17,7 @@ class Grid {
         void printRows();
         void printCols();
         void printBlocks();
+        std::string readGrid();
         //get input from console to set grid
         std::string getGrid();
         //set grid from input string
@@ -27,6 +28,9 @@ class Grid {
         bool validCols();
         bool validBlocks();
         bool validGrid();
+
+        //compare grid to string
+        bool gridMatch(std::string target);
 
         //constructors/destructor
         Grid();

@@ -4,7 +4,14 @@ void Grid::printGrid() {
     std::cout << " --- --- --- --- --- --- --- --- ---" << std::endl;
     for(int i = 0; i < 9; i++) {
         for(int j = 0; j < 9; j++) {
-            std::cout << "| " << squares[9 * i + j]->getValue() <<  " ";
+            std::cout << "| ";
+            if(squares[9 * i + j]->getValue() > 0) {
+                std::cout << squares[9 * i + j]->getValue(); 
+            }
+            else {
+                std::cout << " ";
+            }
+            std::cout <<  " ";
         }
         std::cout << "|" << std::endl;
         std::cout <<  " --- --- --- --- --- --- --- --- ---" << std::endl;
@@ -44,47 +51,64 @@ std::string Grid::getGrid() {
     return setup;
 }
 
-void Grid::setGrid(std::string input) {
-    for(int i = 0; i < input.size(); i++) {
-        squares[i]->setValue(int(input[i]) - 48);
+std::string Grid::readGrid() {
+    std::string output = "";
+    for(int i = 0; i < squares.size(); i++) {
+        output += std::to_string(squares[i]->getValue());
+    }
+    return output;
+}
+
+void Grid::setGrid(std::string layout) {
+    for(int i = 0; i < layout.size(); i++) {
+        squares[i]->setValue(int(layout[i]) - 48);
     }
 }
 
 bool Grid::validRows() {
     for(int i = 0; i < 9; i++) {
         if(!rows[i]->valid_group()) {
-            std::cout << "Row " << i + 1 << " is not valid!" << std::endl;
+            //std::cout << "Row " << i + 1 << " is not valid!" << std::endl;
             return false;
         }
     }
-    std::cout << "The rows are all good!" << std::endl;
     return true;
 }
 
 bool Grid::validCols() {
     for(int i = 0; i < 9; i++) {
         if(!cols[i]->valid_group()) {
-            std::cout << "Column " << i + 1<< " is not valid!" << std::endl;
+            //std::cout << "Column " << i + 1<< " is not valid!" << std::endl;
             return false;
         }
     }
-    std::cout << "The columns are all good!" << std::endl;
     return true;
 }
 
 bool Grid::validBlocks() {
     for(int i = 0; i < 9; i++) {
         if(!blocks[i]->valid_group()) {
-            std::cout << "Block " << i + 1 << " is not valid!" << std::endl;
+            //std::cout << "Block " << i + 1 << " is not valid!" << std::endl;
             return false;
         }
     }
-    std::cout << "The blocks are all good!" << std::endl;
     return true;
 }
 
 bool Grid::validGrid() {
     return validRows() && validCols() && validBlocks();
+}
+
+bool Grid::gridMatch(std::string target) {
+    if(target.size() != 81) {
+        return false;
+    }
+    for(int i = 0; i < target.size(); i++) {
+        if('0' + squares[i]->getValue() != target[i]) {
+            return false;
+        }
+    }
+    return true;
 }
 
 Grid::Grid() {
@@ -141,9 +165,4 @@ Grid::Grid(std::string setup) {
 }
 
 Grid::~Grid() {
-    for(int i = 0; i < squares.size(); i++) {
-        delete squares[i];
-        std::cout << "square " << i << " deleted." << std::endl;
-    }
-    std::cout << "destructor called" << std::endl;
 }
