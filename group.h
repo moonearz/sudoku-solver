@@ -10,4 +10,7 @@ class Group {
     public:
         //constructor
         Group();
+        void print_group(); 
+        bool valid_group();
+        void set_square(int index, Square* square);
 };
