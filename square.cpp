@@ -10,6 +10,9 @@ int Square::getCandidates() {
 
 void Square::setValue(int _value) {
     this->value = _value;
+    if(_value != 0) {
+        this->candidates = 0x000;
+    }
 }
 
 void Square::resetSquare() {
@@ -42,6 +45,6 @@ Square::Square() {
 
 Square::Square(int _value) {
     this->value = _value;
-    this->candidates = 0x1ff;
+    this->candidates = 0x000;
 }
 

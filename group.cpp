@@ -38,3 +38,7 @@ bool Group::valid_group() {
 void Group::set_square(int index, Square* square) {
     squares[index] = square;
 }
+
+Square* Group::get_square(int index) {
+    return squares[index];
+}

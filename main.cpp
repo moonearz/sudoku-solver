@@ -9,11 +9,12 @@ int main() {
     std::string test_blocks = "123456789234567891345678912456789123567891234678912345789123456891234567912345678";
     std::string test_valid = "124567893378294516659831742987123465231456978546789321863972154495618237712345689";
     std::string unsolved_shortz = "039500000000800070000010904100400003000000000007000860006708200010090005000001008";
+    std::string markup_test = "001900008600085030007060100034090000000504000000010420005070900010840007700009200";
 
-
-
-
-    Grid test = Grid(unsolved_shortz);
-    std::cout << test.readGrid();
+    Grid test = Grid();
+    test.setGrid(markup_test);
+    test.printGrid();
+    test.markupGrid();
+    test.printSquareCandidates();
     return 0;
 }

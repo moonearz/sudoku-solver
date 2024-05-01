@@ -17,12 +17,17 @@ class Grid {
         void printRows();
         void printCols();
         void printBlocks();
+        void printSquare(int index);
         void printSquareCandidates();
         std::string readGrid();
         //get input from console to set grid
         std::string getGrid();
         //set grid from input string
         void setGrid(std::string layout);
+
+        //markup functions
+        void markupSquare(int index);
+        void markupGrid();
 
         //valid grid checkers
         bool validRows();

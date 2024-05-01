@@ -40,10 +40,13 @@ void Grid::printBlocks(){
     }
 }
 
+void Grid::printSquare(int index) {
+     std::cout << "Square " << index << "-- ";
+     squares[index]->printCandidates();
+}
 void Grid::printSquareCandidates() {
     for(int i = 0; i < 81; i++) {
-        std::cout << "Square " << i << "-- ";
-        squares[i]->printCandidates();
+        printSquare(i);
     }
 }
 
@@ -69,6 +72,27 @@ std::string Grid::readGrid() {
 void Grid::setGrid(std::string layout) {
     for(int i = 0; i < layout.size(); i++) {
         squares[i]->setValue(int(layout[i]) - 48);
+    }
+}
+
+void Grid::markupSquare(int index) {
+    if(squares[index]->getValue() != 0) {
+        return;
+    }
+    Square* target_square = squares[index];
+    int row_number = index / 9;
+    int col_number = index % 9;
+    int block_number = 3 * ((index / 9) / 3) + (index % 9) / 3;
+    for(int i = 0; i < 9; i++) { 
+        target_square->removeCandidate(rows[row_number]->get_square(i)->getValue());
+        target_square->removeCandidate(cols[col_number]->get_square(i)->getValue());
+        target_square->removeCandidate(blocks[block_number]->get_square(i)->getValue());
+    }
+}
+
+void Grid::markupGrid() {
+    for(int i = 0; i < 81; i++) {
+        markupSquare(i);
     }
 }
 
@@ -134,7 +158,9 @@ Grid::Grid() {
         squares[i] = new_square;
         rows[i / 9]->set_square(i % 9, new_square);
         cols[i % 9]->set_square(i / 9, new_square);
-        blocks[(i / 9) / 3 + (i % 9) / 3]->set_square((3 * i / 9) % 3 + (i % 9) % 3, new_square);
+        int block_num = 3 * ((i / 9) / 3) + (i % 9) / 3;
+        int index = (3 * (((i / 9)) % 3)) + (i % 9) % 3;
+        blocks[block_num]->set_square(index, new_square);
     }
 }
 
