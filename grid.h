@@ -30,7 +30,7 @@ class Grid {
         void markupSquare(int index);
         void markupGrid();
 
-        //solve with pencil-and-paper algorithm
+        //solve with pencil-and-paper algorithm -> requires backtracking in some cases
         bool is_solved();
         bool find_forced_nums();
         void solve_pp();
@@ -38,6 +38,7 @@ class Grid {
         //backtracking
         std::string getSafeState();
         void setSafeState(std::string safe);
+        bool guess();
 
         //valid grid checkers
         bool validRows();

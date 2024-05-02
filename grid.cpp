@@ -143,9 +143,19 @@ void Grid::solve_pp() {
     //check if puzzle is already solved
     if(is_solved()) return;
     while(find_forced_nums()) {
+        if(is_solved()) {
+            std::cout << "The puzzle was solved. Printing grid: " << std::endl;
+            printGrid();
+            return;
+        }
     }
-    std::cout << "no moves made. printing grid:" << std::endl;
-    printGrid();
+    if(!guess()) {
+        std::cout << "The puzzle was solved. Printing grid: " << std::endl;
+        printGrid();
+        return;
+    }
+    std::cout << "Could not solve puzzle." << std::endl;
+    return;
 }
 
 std::string Grid::getSafeState() {
@@ -154,6 +164,11 @@ std::string Grid::getSafeState() {
 
 void Grid::setSafeState(std::string safe) {
     safe_state = safe;
+}
+
+//returns true if leads to solution, false if leads to invalid grid
+bool Grid::guess() {
+    return true;
 }
 
 bool Grid::validRows() {
