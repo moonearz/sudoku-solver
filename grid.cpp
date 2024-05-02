@@ -86,6 +86,7 @@ void Grid::markupSquare(int index) {
         return;
     }
     Square* target_square = squares[index];
+    target_square->resetCandidates();
     int row_number = index / 9;
     int col_number = index % 9;
     int block_number = 3 * ((index / 9) / 3) + (index % 9) / 3;
@@ -102,13 +103,17 @@ void Grid::markupGrid() {
     }
 }
 
-bool Grid::is_solved() {
+bool Grid::is_full() {
     for(int i = 0; i < 81; i++) {
         if(squares[i]->getValue() == 0) {
             return false;
         }
     }
     return true;
+}
+
+bool Grid::is_solved() {
+    return is_full() && validGrid();
 }
 
 bool Grid::find_forced_nums() {
@@ -130,32 +135,38 @@ bool Grid::find_forced_nums() {
             made_change = true;
         }
         if(!validGrid()) {
-            std::cout << "Error: invalid grid" << std::endl;
-            setGrid(safe_state);
+            //std::cout << "Error: invalid grid" << std::endl;
+            //setGrid(safe_state);
             return false;
         }
-        safe_state = readGrid();
+        //safe_state = readGrid();
     }
+    //printGrid();
     return made_change;
 }
 
-void Grid::solve_pp() {
+bool Grid::solve_pp() {
     //check if puzzle is already solved
-    if(is_solved()) return;
+    if(is_solved()) return true;
+    if(!validGrid()) return false;
     while(find_forced_nums()) {
         if(is_solved()) {
-            std::cout << "The puzzle was solved. Printing grid: " << std::endl;
-            printGrid();
-            return;
+            //std::cout << "The puzzle was solved. Printing grid: " << std::endl;
+            //printGrid();
+            return true;
         }
     }
-    if(!guess()) {
-        std::cout << "The puzzle was solved. Printing grid: " << std::endl;
-        printGrid();
-        return;
+    if(!validGrid()) {
+        std::cout << "forced contradiction" << std::endl;
+        return false;
     }
-    std::cout << "Could not solve puzzle." << std::endl;
-    return;
+    if(guess()) {
+        //std::cout << "The puzzle was solved. Printing grid: " << std::endl;
+        //printGrid();
+        return true;
+    }
+    //std::cout << "Could not solve puzzle." << std::endl;
+    return false;
 }
 
 std::string Grid::getSafeState() {
@@ -168,7 +179,37 @@ void Grid::setSafeState(std::string safe) {
 
 //returns true if leads to solution, false if leads to invalid grid
 bool Grid::guess() {
-    return true;
+    std::cout << "calling guess..." << std::endl;
+    if(is_solved()) {
+        return true;
+    }
+    for(int i = 0; i < 81; i++) {
+        if(squares[i]->getValue() != 0) {
+            continue;
+        }
+        int k = 1;
+        while(squares[i]->guess_kth_highest(k)) {
+            if(solve_pp()) {               
+                return true;
+            }
+            else {
+                std::cout << "reverting..." << std::endl;
+                printGrid();
+                setGrid(safe_state);
+                markupGrid();
+                k++;
+            }
+        }
+    }
+    return false;
+}
+
+void Grid::guessSquare(int index) {
+    squares[index]->guess_highest();
+}
+
+void Grid::guessSquareKth(int index, int k) {
+    squares[index]->guess_kth_highest(k);
 }
 
 bool Grid::validRows() {

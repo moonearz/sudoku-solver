@@ -24,6 +24,10 @@ void Square::resetSquare() {
     this->candidates = 511;
 }
 
+void Square::resetCandidates() {
+    this->candidates = 511;
+}
+
 void Square::printCandidates() {
     std::cout << "This square's candidates are: ";
     for(int i = 0; i < 9; i++) {
@@ -40,6 +44,50 @@ void Square::removeCandidate(int _candidate) {
     }
     int mask = 511 - (1 << (_candidate - 1));
     this->candidates &= mask;
+}
+
+int Square::highest_candidate() {
+    if(this->candidates == 0) {
+        return 0;
+    }
+    int highest_candidate = 1;
+    int base = 1;
+    while(this->candidates > base) {
+        base *= 2;
+        base++;
+        highest_candidate++;
+    }
+    return highest_candidate;
+}
+
+bool Square::guess_highest() {
+    if(this->value != 0) {
+        return false;
+    }
+    if(this->candidates == 0) {
+        return false;
+    }
+    std::cout << "guessing square " << this->index << "'s value as " << this->highest_candidate() << std::endl;
+    this->setValue(highest_candidate());
+    return true;
+}
+
+bool Square::guess_kth_highest(int k) {
+    if(this->value != 0) {
+        return false;
+    }
+    if(this->candidates == 0) return false;
+    int counter = 1;
+    while(counter < k) {
+        if(this->candidates == 0) {
+            return false;
+        }
+        this->removeCandidate(highest_candidate());
+        counter++;
+    }
+    std::cout << "guessing square " << this->index << "'s value as " << this->highest_candidate() << std::endl;
+    this->setValue(highest_candidate());
+    return true;
 }
 
 Square::Square(int _index) {

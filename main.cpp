@@ -21,10 +21,11 @@ int main() {
     std::string tough_solved = "341927568692185734857463192134296875278534619569718423425371986916842357783659241";
 
     Grid test = Grid();
-    test.setGrid(moderate_unsolved);
+    test.setGrid(tough_unsolved);
     test.printGrid();
     test.markupGrid();
     test.solve_pp();
-    test.printSquareCandidates();
+    test.printGrid();
+    //std::cout << test.validGrid() << std::endl;
     return 0;
 }

@@ -15,8 +15,12 @@ class Square {
         int getIndex();
         void setValue(int _value);
         void resetSquare();
+        void resetCandidates();
         void printCandidates();
         void removeCandidate(int _candidate);
+        int highest_candidate();
+        bool guess_highest();
+        bool guess_kth_highest(int k);
         //constructors
         Square(int _index);
         Square(int _index, int _value);;
