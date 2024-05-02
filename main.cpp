@@ -26,6 +26,6 @@ int main() {
     test.markupGrid();
     test.solve_pp();
     test.printGrid();
-    //std::cout << test.validGrid() << std::endl;
+    
     return 0;
 }

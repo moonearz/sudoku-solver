@@ -20,6 +20,7 @@ class Square {
         void removeCandidate(int _candidate);
         int highest_candidate();
         bool guess_highest();
+        //needed for format of backtracking
         bool guess_kth_highest(int k);
         //constructors
         Square(int _index);

@@ -139,7 +139,6 @@ bool Grid::find_forced_nums() {
             //setGrid(safe_state);
             return false;
         }
-        //safe_state = readGrid();
     }
     //printGrid();
     return made_change;

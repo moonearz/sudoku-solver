@@ -72,6 +72,7 @@ bool Square::guess_highest() {
     return true;
 }
 
+//like guess highest, but kth highest
 bool Square::guess_kth_highest(int k) {
     if(this->value != 0) {
         return false;

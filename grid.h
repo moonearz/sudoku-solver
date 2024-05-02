@@ -30,7 +30,7 @@ class Grid {
         void markupSquare(int index);
         void markupGrid();
 
-        //solve with pencil-and-paper algorithm -> requires backtracking in some cases
+        //solve with pencil-and-paper algorithm ->requires backtracking in some cases
         bool is_full();
         bool is_solved();
         bool find_forced_nums();
