@@ -35,6 +35,7 @@ void Square::printCandidates() {
             std::cout << i + 1 << " ";
         }
     }
+    std::cout << "# of candidates: " << num_candidates();
     std::cout << std::endl;
 }
 
@@ -60,6 +61,16 @@ int Square::highest_candidate() {
     return highest_candidate;
 }
 
+int Square::num_candidates() {
+    int temp = this->candidates;
+    int count = 0;
+    while(temp > 0) {
+        if(temp % 2 == 1) count++;
+        temp = temp >> 1;
+    }
+    return count;
+}
+
 bool Square::guess_highest() {
     if(this->value != 0) {
         return false;
@@ -67,7 +78,7 @@ bool Square::guess_highest() {
     if(this->candidates == 0) {
         return false;
     }
-    std::cout << "guessing square " << this->index << "'s value as " << this->highest_candidate() << std::endl;
+    //std::cout << "guessing square " << this->index << "'s value as " << this->highest_candidate() << std::endl;
     this->setValue(highest_candidate());
     return true;
 }

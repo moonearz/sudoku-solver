@@ -120,16 +120,19 @@ bool Grid::find_forced_nums() {
     bool made_change = false;
     for(int i = 0; i < 9; i++) {
         if(rows[i]->find_forced_number()) {
+            printGrid();
             //std::cout << "change in row " << i + 1 << std::endl;
             markupGrid();
             made_change = true;
         }
         if(cols[i]->find_forced_number()) {
+            printGrid();
             markupGrid();
             //std::cout << "change in col " << i + 1 << std::endl;
             made_change = true;
         }
         if(blocks[i]->find_forced_number()) {
+            printGrid();
             markupGrid();
             //std::cout << "change in block " << i + 1 << std::endl;
             made_change = true;
@@ -156,7 +159,8 @@ bool Grid::solve_pp() {
         }
     }
     if(!validGrid()) {
-        std::cout << "forced contradiction" << std::endl;
+        //std::cout << "forced contradiction" << std::endl;
+        //printGrid();
         return false;
     }
     if(guess()) {
@@ -178,7 +182,7 @@ void Grid::setSafeState(std::string safe) {
 
 //returns true if leads to solution, false if leads to invalid grid
 bool Grid::guess() {
-    std::cout << "calling guess..." << std::endl;
+    //std::cout << "calling guess..." << std::endl;
     if(is_solved()) {
         return true;
     }
@@ -187,18 +191,22 @@ bool Grid::guess() {
             continue;
         }
         int k = 1;
-        while(squares[i]->guess_kth_highest(k)) {
+        while(k < squares[i]->num_candidates()) {
+            if(!squares[i]->guess_kth_highest(k)) return false;
             if(solve_pp()) {               
                 return true;
             }
             else {
-                std::cout << "reverting..." << std::endl;
-                printGrid();
+                //std::cout << "reverting..." << std::endl;
+                //printGrid();
                 setGrid(safe_state);
                 markupGrid();
                 k++;
             }
         }
+        squares[i]->guess_kth_highest(k);
+        safe_state = readGrid();
+        markupGrid();
     }
     return false;
 }

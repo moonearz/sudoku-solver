@@ -56,17 +56,11 @@ bool Group::find_forced_number() {
             continue;
         }
         //check if there is only one candidate
-        bool one_candidate = false;
-        for(int j = 0; j < 9; j++) {
-            if(target_candidates == pows_of_two[j]) {
-                //std::cout << "only-- setting square " << squares[i]->getIndex() << "'s value to: " << j + 1 << std::endl;
-                squares[i]->setValue(j + 1);
-                made_change = true;
-                one_candidate = true;
-                break;
-            }
+        if(squares[i]->num_candidates() == 1) {
+            squares[i]->setValue(squares[i]->highest_candidate());
+            made_change = true;
+            continue;
         }
-        if(one_candidate) continue;
         for(int j = 0; j < 9; j++) {
             if(i == j) {
                 continue;
