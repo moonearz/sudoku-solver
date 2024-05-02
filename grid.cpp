@@ -47,7 +47,9 @@ void Grid::printSquare(int index) {
 
 void Grid::printSquareCandidates() {
     for(int i = 0; i < 81; i++) {
-        printSquare(i);
+        if(squares[i]->getValue() == 0) {
+            printSquare(i);
+        }
     }
 }
 
@@ -73,6 +75,9 @@ std::string Grid::readGrid() {
 void Grid::setGrid(std::string layout) {
     for(int i = 0; i < layout.size(); i++) {
         squares[i]->setValue(int(layout[i]) - 48);
+    }
+    if(validGrid()) {
+        safe_state = layout;
     }
 }
 
@@ -110,17 +115,26 @@ bool Grid::find_forced_nums() {
     bool made_change = false;
     for(int i = 0; i < 9; i++) {
         if(rows[i]->find_forced_number()) {
-            //std::cout << "change in row " << i << std::endl;
+            //std::cout << "change in row " << i + 1 << std::endl;
+            markupGrid();
             made_change = true;
         }
         if(cols[i]->find_forced_number()) {
-            //std::cout << "change in col " << i << std::endl;
+            markupGrid();
+            //std::cout << "change in col " << i + 1 << std::endl;
             made_change = true;
         }
         if(blocks[i]->find_forced_number()) {
-            //std::cout << "change in block " << i << std::endl;
+            markupGrid();
+            //std::cout << "change in block " << i + 1 << std::endl;
             made_change = true;
         }
+        if(!validGrid()) {
+            std::cout << "Error: invalid grid" << std::endl;
+            setGrid(safe_state);
+            return false;
+        }
+        safe_state = readGrid();
     }
     return made_change;
 }
@@ -128,6 +142,18 @@ bool Grid::find_forced_nums() {
 void Grid::solve_pp() {
     //check if puzzle is already solved
     if(is_solved()) return;
+    while(find_forced_nums()) {
+    }
+    std::cout << "no moves made. printing grid:" << std::endl;
+    printGrid();
+}
+
+std::string Grid::getSafeState() {
+    return safe_state;
+}
+
+void Grid::setSafeState(std::string safe) {
+    safe_state = safe;
 }
 
 bool Grid::validRows() {
@@ -196,6 +222,7 @@ Grid::Grid() {
         int index = (3 * (((i / 9)) % 3)) + (i % 9) % 3;
         blocks[block_num]->set_square(index, new_square);
     }
+    safe_state = readGrid();
 }
 
 Grid::Grid(std::string setup) {
@@ -229,6 +256,7 @@ Grid::Grid(std::string setup) {
             blocks[block_num]->set_square(index, new_square);
         }
     }
+    safe_state = setup;
 }
 
 Grid::~Grid() {

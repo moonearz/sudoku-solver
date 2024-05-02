@@ -22,6 +22,9 @@ void Group::print_group() {
 bool Group::valid_group() {
     std::vector<int> unused = {1, 2, 3, 4, 5, 6, 7, 8, 9};
     for(int i = 0; i < 9; i++) {
+        if(squares[i]->getValue() == 0) {
+            continue;
+        }
         bool flag = true;
         for(int j = 0; j < unused.size(); j++) {
             if(squares[i]->getValue() == unused[j]) {
@@ -56,29 +59,30 @@ bool Group::find_forced_number() {
         bool one_candidate = false;
         for(int j = 0; j < 9; j++) {
             if(target_candidates == pows_of_two[j]) {
-                std::cout << "ONLY-- setting value to: " << j + 1 << std::endl;
+                std::cout << "only-- setting square " << squares[i]->getIndex() << "'s value to: " << j + 1 << std::endl;
                 squares[i]->setValue(j + 1);
                 made_change = true;
                 one_candidate = true;
                 break;
             }
         }
-        //and together candidates
         if(one_candidate) continue;
         for(int j = 0; j < 9; j++) {
             if(i == j) {
                 continue;
             }
-            //can't & values that are set because candidates is 0
             if(squares[j]->getValue() == 0) {
                 target_candidates |= squares[j]->getCandidates();
                 target_candidates ^= squares[j]->getCandidates();
+            }
+            else {
+                target_candidates &= ~(1 << (squares[j]->getValue() - 1));
             }
         }
         //check new candidate value
         for(int j = 0; j < 9; j++) {
             if(target_candidates == pows_of_two[j]) {
-                //std::cout << "AFTER something-- setting square " << squares[i]->getIndex() <<  "'s value to: " << j + 1 << std::endl;
+                std::cout << "after operation-- setting square " << squares[i]->getIndex() <<  "'s value to: " << j + 1 << std::endl;
                 squares[i]->setValue(j + 1);
                 made_change = true;
                 break;

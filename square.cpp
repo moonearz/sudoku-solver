@@ -15,13 +15,13 @@ int Square::getIndex() {
 void Square::setValue(int _value) {
     this->value = _value;
     if(_value != 0) {
-        this->candidates = 0x000;
+        this->candidates = 0;
     }
 }
 
 void Square::resetSquare() {
     this->value = EMPTY;
-    this->candidates = 0x1ff;
+    this->candidates = 511;
 }
 
 void Square::printCandidates() {
@@ -44,13 +44,13 @@ void Square::removeCandidate(int _candidate) {
 
 Square::Square(int _index) {
     this->value = EMPTY;
-    this->candidates = 0x1ff;
+    this->candidates = 511;
     this->index = _index;
 }
 
 Square::Square(int _index, int _value) {
     this->value = _value;
-    this->candidates = 0x000;
+    this->candidates = 0;
     this->index = _index;
 }
 

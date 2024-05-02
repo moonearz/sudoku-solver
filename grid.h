@@ -11,6 +11,7 @@ class Grid {
     std::vector<Group*> rows;
     std::vector<Group*> cols;
     std::vector<Group*> blocks;
+    std::string safe_state;
 
     public:
         void printGrid();
@@ -33,6 +34,10 @@ class Grid {
         bool is_solved();
         bool find_forced_nums();
         void solve_pp();
+
+        //backtracking
+        std::string getSafeState();
+        void setSafeState(std::string safe);
 
         //valid grid checkers
         bool validRows();
