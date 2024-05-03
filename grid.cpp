@@ -120,19 +120,16 @@ bool Grid::find_forced_nums() {
     bool made_change = false;
     for(int i = 0; i < 9; i++) {
         if(rows[i]->find_forced_number()) {
-            printGrid();
             //std::cout << "change in row " << i + 1 << std::endl;
             markupGrid();
             made_change = true;
         }
         if(cols[i]->find_forced_number()) {
-            printGrid();
             markupGrid();
             //std::cout << "change in col " << i + 1 << std::endl;
             made_change = true;
         }
         if(blocks[i]->find_forced_number()) {
-            printGrid();
             markupGrid();
             //std::cout << "change in block " << i + 1 << std::endl;
             made_change = true;
@@ -190,6 +187,7 @@ bool Grid::guess() {
         if(squares[i]->getValue() != 0) {
             continue;
         }
+        //std::cout << "square at index " << i << " has " << squares[i]->num_candidates() << " candidates" << std::endl;
         int k = 1;
         while(k < squares[i]->num_candidates()) {
             if(!squares[i]->guess_kth_highest(k)) return false;
@@ -204,6 +202,8 @@ bool Grid::guess() {
                 k++;
             }
         }
+        //only one option left
+        //std::cout << "square " << i << " is determined" << std::endl;
         squares[i]->guess_kth_highest(k);
         safe_state = readGrid();
         markupGrid();

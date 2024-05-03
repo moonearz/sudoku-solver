@@ -23,6 +23,7 @@ bool Group::valid_group() {
     std::vector<int> unused = {1, 2, 3, 4, 5, 6, 7, 8, 9};
     for(int i = 0; i < 9; i++) {
         if(squares[i]->getValue() == 0) {
+            if(squares[i]->getCandidates() == 0) return false;
             continue;
         }
         bool flag = true;
@@ -76,6 +77,7 @@ bool Group::find_forced_number() {
         //check new candidate value
         for(int j = 0; j < 9; j++) {
             if(target_candidates == pows_of_two[j]) {
+                //std::cout << "square at index " << squares[i]->getIndex() << " must be " << j + 1 << std::endl;
                 squares[i]->setValue(j + 1);
                 made_change = true;
                 break;
