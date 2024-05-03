@@ -21,9 +21,9 @@ int main() {
     std::string tough_solved = "341927568692185734857463192134296875278534619569718423425371986916842357783659241";
 
     Grid test = Grid();
-    test.setGrid(mepham_diabolical);
     test.printGrid();
     test.markupGrid();
+    test.printSquareCandidates();
     test.solve_pp();
     test.printGrid();
     

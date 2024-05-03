@@ -191,11 +191,12 @@ bool Grid::guess() {
         int k = 1;
         while(k < squares[i]->num_candidates()) {
             if(!squares[i]->guess_kth_highest(k)) return false;
+            markupGrid();
             if(solve_pp()) {               
                 return true;
             }
             else {
-                //std::cout << "reverting..." << std::endl;
+                std::cout << "reverting..." << std::endl;
                 //printGrid();
                 setGrid(safe_state);
                 markupGrid();

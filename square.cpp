@@ -97,7 +97,7 @@ bool Square::guess_kth_highest(int k) {
         this->removeCandidate(highest_candidate());
         counter++;
     }
-    //std::cout << "guessing square " << this->index << "'s value as " << this->highest_candidate() << std::endl;
+    std::cout << "guessing square " << this->index << "'s value as " << this->highest_candidate() << std::endl;
     this->setValue(highest_candidate());
     return true;
 }
