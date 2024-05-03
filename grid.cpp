@@ -74,11 +74,13 @@ std::string Grid::readGrid() {
 
 void Grid::setGrid(std::string layout) {
     for(int i = 0; i < layout.size(); i++) {
-        squares[i]->setValue(int(layout[i]) - 48);
+        if(int(layout[i]) - 48 > 0 && int(layout[i]) - 48 < 10) squares[i]->setValue(int(layout[i]) - 48);
+        else squares[i]->setValue(0);
     }
     if(validGrid()) {
         safe_state = layout;
     }
+    markupGrid();
 }
 
 void Grid::markupSquare(int index) {
@@ -189,6 +191,7 @@ bool Grid::guess() {
         }
         //std::cout << "square at index " << i << " has " << squares[i]->num_candidates() << " candidates" << std::endl;
         int k = 1;
+        std::string current_state = readGrid();
         while(k < squares[i]->num_candidates()) {
             if(!squares[i]->guess_kth_highest(k)) return false;
             markupGrid();
@@ -196,9 +199,9 @@ bool Grid::guess() {
                 return true;
             }
             else {
-                std::cout << "reverting..." << std::endl;
+                //std::cout << "reverting..." << std::endl;
                 //printGrid();
-                setGrid(safe_state);
+                setGrid(current_state);
                 markupGrid();
                 k++;
             }
