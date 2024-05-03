@@ -56,8 +56,9 @@ void Grid::printSquareCandidates() {
 std::string Grid::getGrid() {
     std::string input;
     std::string setup;
+    std::vector<std::string> suffixes = {"st", "nd", "rd", "th", "th", "th", "th", "th", "th"};
     for(int i = 0; i < 9; i++) {
-        std::cout << "Enter in the " << (i + 1) << "th row: ";
+        std::cout << "Enter in the " << (i + 1) << suffixes[i] << " row: ";
         std::cin >> input;
         setup += input;
     }
@@ -290,6 +291,7 @@ Grid::Grid() {
         blocks[block_num]->set_square(index, new_square);
     }
     safe_state = readGrid();
+    markupGrid();
 }
 
 Grid::Grid(std::string setup) {
@@ -324,6 +326,7 @@ Grid::Grid(std::string setup) {
         }
     }
     safe_state = setup;
+    markupGrid();
 }
 
 Grid::~Grid() {

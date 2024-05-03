@@ -4,26 +4,74 @@
 #include "grid.h"
 
 int main() {
+    void printMenu();
     //TEST GRIDS
-    std::string unsolved_shortz = "039500000000800070000010904100400003000000000007000860006708200010090005000001008";
-    std::string solved_shortz = "639574182541829376782613954198467523365982417427135869956748231813296745274351698";
     std::string mepham_diabolical = "295700860031865020806000000007050006000387000500016700000500109020600350054008672";
     std::string mepham_solution = "295743861431865927876192543387459216612387495549216738763524189928671354154938672";
-    std::string moderate_unsolved = "006201000800000071001700032007030040050000080080040700460005800170000004000406500";
-    std::string moderate_solved = "736291458842653971591784632917538246254967183683142795469315827175829364328476519";
-    std::string tough_unsolved = "001900008600085030007060100034090000000504000000010420005070900010840007700009200";
-    std::string tough_solved = "341927568692185734857463192134296875278534619569718423425371986916842357783659241";
-    std::string hard_test = "85...24..72......9..4.........1.7..23.5...9...4...........8..7..17..........36.4.";
-    std::string first_row = "987654321000000000000000000000000000000000000000000000000000000000000000000000000";
-    std::string imp = "000005080000601043000000000010500000000010600300000005530000061000000004000000000";
 
-    Grid test = Grid();
-    test.setGrid(mepham_diabolical);
-    test.printGrid();
-    test.markupGrid();
-    //test.printSquareCandidates();
-    test.solve_pp();
-    test.printGrid();
+    std::string option = "";
+
+    while(option != "4") {
+        printMenu();
+        std::cin >> option;
+        std::cout << std::endl;
+        while(option != "1" && option != "2" && option != "3" && option != "4") {
+            std::cout << "Error: invalid input. Returning to menu..." << std::endl;
+            printMenu();
+            std::cin >> option;
+        }
+        if(option == "1") {
+            Grid grid = Grid();
+            std::string proceed = "";
+            while(proceed != "y" && proceed != "Y") {
+                std::string userGrid = grid.getGrid();
+                grid.setGrid(userGrid);
+                std::cout << "Printing entered grid: " << std::endl;
+                grid.printGrid();
+                std::cout << "Is this the correct grid? (y/n): ";
+                std::cin >> proceed;
+                std::cout << std::endl;
+            }
+            if(grid.solve_pp()) {
+                std::cout << std::endl << "The puzzle was solved! Press enter to see the solution: " << std::endl;
+                std::cin.ignore();
+                grid.printGrid();
+                std::cout << "Press enter to return to the menu." << std::endl << std::endl;
+                std::cin.ignore();
+            }
+            else {
+                std::cout << "Could not solve the puzzle! Returning to the menu..." << std::endl <<std::endl;
+            }
+        }
+        else if(option == "2") {
+
+        }
+        else if(option == "3") {
+            Grid grid = Grid(mepham_diabolical);
+            std::cout << "This is a very challenging puzzle: " << std::endl;
+            grid.printGrid();
+            std::cout << "Press enter to see the solution!" << std::endl;
+            std::cin.ignore();
+            grid.solve_pp();
+            grid.printGrid();
+            std::cout << std::endl;
+            std::cout << "Press enter to return to the menu." << std::endl << std::endl;
+            std::cin.ignore();
+        }
+        else {
+            break;
+        }
+    }
     
     return 0;
+}
+
+void printMenu() {
+    std::cout << std::endl << std::endl;
+    std::cout << "###################### SUDOKU SOLVER ######################" << std::endl << std::endl << std::endl;
+    std::cout << "Choose an option from the menu: " << std::endl;
+    std::cout << "1. Enter in a grid to solve" << std::endl;
+    std::cout << "2. Run the test cases" << std::endl;
+    std::cout << "3. Demo a very challenging puzzle" << std::endl;
+    std::cout << "4. Quit" << std::endl;
 }
