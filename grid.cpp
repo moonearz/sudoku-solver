@@ -60,6 +60,7 @@ std::string Grid::getGrid() {
     for(int i = 0; i < 9; i++) {
         std::cout << "Enter in the " << (i + 1) << suffixes[i] << " row: ";
         std::cin >> input;
+        std::cin.ignore();
         setup += input;
     }
     return setup;
